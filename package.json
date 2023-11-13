@@ -1,7 +1,7 @@
 {
   "name": "unplugin-time-stat",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "packageManager": "pnpm@8.6.12",
   "description": "Build time stat reporting for unplugin",
   "license": "MIT",
