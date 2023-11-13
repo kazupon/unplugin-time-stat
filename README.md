@@ -160,6 +160,10 @@ module.exports = {
 
 <br></details>
 
+## 🛠️ Plugin options
+
+See the [here](https://github.com/kazupon/unplugin-time-stat/blob/main/src/types.ts)
+
 ## 🙌 Contributing guidelines
 
 If you are interested in contributing to `unplugin-time-stat`, I highly recommend checking out [the contributing guidelines](/CONTRIBUTING.md) here. You'll find all the relevant information such as [how to make a PR](/CONTRIBUTING.md#pull-request-guidelines), [how to setup development](/CONTRIBUTING.md#development-setup)) etc., there.
