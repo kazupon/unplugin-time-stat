@@ -11,6 +11,10 @@ Build time stat reporting for [unplugin](https://github.com/unjs/unplugin).
   - webapck / rspack: stat json generated with the `--json` or `--analyzer` option
   - vite / rollup: stat via 3rd party plugin
 
+## 🌟 Features
+
+- build time outout console
+
 ## 💿 Install
 
 ```sh
