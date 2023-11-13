@@ -1,0 +1,163 @@
+{
+  "name": "unplugin-time-stat",
+  "type": "module",
+  "version": "0.0.1",
+  "packageManager": "pnpm@8.6.12",
+  "description": "Build time stat reporting for unplugin",
+  "license": "MIT",
+  "homepage": "https://github.com/kazupon/unplugin-time-stat#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kazupon/unplugin-time-stat.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kazupon/unplugin-time-stat/issues"
+  },
+  "keywords": [
+    "unplugin",
+    "vite",
+    "webpack",
+    "rspack",
+    "rollup",
+    "esbuild",
+    "transform"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./vite": {
+      "types": "./dist/vite.d.ts",
+      "import": "./dist/vite.js",
+      "require": "./dist/vite.cjs"
+    },
+    "./webpack": {
+      "types": "./dist/webpack.d.ts",
+      "import": "./dist/webpack.js",
+      "require": "./dist/webpack.cjs"
+    },
+    "./rollup": {
+      "types": "./dist/rollup.d.ts",
+      "import": "./dist/rollup.js",
+      "require": "./dist/rollup.cjs"
+    },
+    "./esbuild": {
+      "types": "./dist/esbuild.d.ts",
+      "import": "./dist/esbuild.js",
+      "require": "./dist/esbuild.cjs"
+    },
+    "./nuxt": {
+      "types": "./dist/nuxt.d.ts",
+      "import": "./dist/nuxt.js",
+      "require": "./dist/nuxt.cjs"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js",
+      "require": "./dist/types.cjs"
+    },
+    "./*": "./*"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./*"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepare": "git config --local core.hooksPath .githooks",
+    "changelog": "gh-changelogen --repo=kazupon/unplugin-time-stat",
+    "release": "bumpp --commit \"release: v%s\" --push --tag",
+    "prepublishOnly": "pnpm build",
+    "fix": "run-p lint:fix format:fix",
+    "format": "prettier --config .prettierrc.mjs --ignore-path .prettierignore --list-different '**/*.{js,json,html,md}'",
+    "format:fix": "pnpm format --write",
+    "lint": "eslint --cache --ext .js,.ts,.json .",
+    "lint:fix": "pnpm lint --fix",
+    "build": "tsup",
+    "build:fix": "esno scripts/postbuild.ts",
+    "dev": "tsup --watch src",
+    "play": "pnpm --filter playground run build",
+    "start": "esno src/index.ts",
+    "test": "vitest"
+  },
+  "peerDependencies": {
+    "@nuxt/kit": "^3",
+    "@nuxt/schema": "^3",
+    "esbuild": "*",
+    "rollup": "^3",
+    "vite": ">=3",
+    "webpack": "^4 || ^5"
+  },
+  "peerDependenciesMeta": {
+    "webpack": {
+      "optional": true
+    },
+    "rollup": {
+      "optional": true
+    },
+    "vite": {
+      "optional": true
+    },
+    "esbuild": {
+      "optional": true
+    },
+    "@nuxt/kit": {
+      "optional": true
+    },
+    "@nuxt/schema": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "unplugin": "^1.4.0"
+  },
+  "devDependencies": {
+    "@nuxt/kit": "^3.8.0",
+    "@nuxt/schema": "^3.8.0",
+    "@types/node": "^20.9.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "bumpp": "^9.2.0",
+    "chalk": "^5.3.0",
+    "eslint": "^8.53.0",
+    "eslint-config-prettier": "^9.0.0",
+    "esno": "^0.17.0",
+    "fast-glob": "^3.3.1",
+    "gh-changelogen": "^0.2.8",
+    "nodemon": "^3.0.1",
+    "npm-run-all": "^4.1.5",
+    "lint-staged": "^15.0.0",
+    "prettier": "^3.1.0",
+    "rimraf": "^5.0.1",
+    "rollup": "^3.28.1",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9",
+    "vitest": "^0.34.2",
+    "webpack": "^5.88.2"
+  },
+  "lint-staged": {
+    "*.{json,md,yml}": [
+      "prettier --write"
+    ],
+    "*.{js?(x)}": [
+      "prettier --write",
+      "eslint --fix --ext .js,.jsx"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write",
+      "eslint --fix --ext .ts,.tsx"
+    ]
+  }
+}

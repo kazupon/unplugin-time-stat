@@ -1,0 +1,141 @@
+---
+name: CI
+
+env:
+  CI: true
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [18]
+        os: [ubuntu-latest]
+
+    name: Lint on Node.js ${{ matrix.node-version }}
+    steps:
+      - name: Checkout codes
+        uses: actions/checkout@v4
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Linting
+        run: pnpm lint
+
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [18]
+        os: [ubuntu-latest]
+
+    name: Build on Node.js ${{ matrix.node-version }}
+    steps:
+      - name: Checkout codes
+        uses: actions/checkout@v4
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Building
+        run: pnpm build
+
+  test:
+    needs:
+      - build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [18]
+        os: [ubuntu-latest]
+
+    name: Test on Node.js ${{ matrix.node-version }}
+    steps:
+      - name: Checkout codes
+        uses: actions/checkout@v4
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Testing
+        run: pnpm play
+
+  nightly-release:
+    needs:
+      - lint
+      - build
+      - test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node-version: [18]
+        os: [ubuntu-latest]
+    steps:
+      - name: Checkout codes
+        uses: actions/checkout@v4
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Restore dist cache
+        uses: actions/cache@v3
+        with:
+          path: dist
+          key: ${{ matrix.os }}-node-v${{ matrix.node-version }}-${{ github.sha }}
+
+      - name: Release Nightly
+        if: |
+          github.event_name == 'push' &&
+          !startsWith(github.event.head_commit.message, '[skip-release]') &&
+          !startsWith(github.event.head_commit.message, 'chore') &&
+          !startsWith(github.event.head_commit.message, 'release') &&
+          !startsWith(github.event.head_commit.message, 'docs')
+        run: ./scripts/release.sh
+        env:
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+          NIGHTLY_RELEASE: 'true'

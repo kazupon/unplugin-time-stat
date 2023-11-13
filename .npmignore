@@ -1,0 +1,13 @@
+*.log
+*.swp
+*.tgz
+.vscode
+.eslintcache
+coverage
+test
+tests
+__test__
+__tests__
+__snapshots__
+playground
+scripts
