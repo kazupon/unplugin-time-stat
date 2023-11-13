@@ -14,6 +14,7 @@ Build time stat reporting for [unplugin](https://github.com/unjs/unplugin).
 ## 🌟 Features
 
 - build time output console
+- custom hook
 
 ## 💿 Install
 
