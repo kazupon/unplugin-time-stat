@@ -29,12 +29,14 @@ import TimeStat from 'unplugin-time-stat/vite'
 function metrics(buildTime, { start, end }) {
   // Something hooking (ex. send metrics service like datadog)
   // ...
+
+  // if you will return a string, it's output to console
+  return `Build time: ${raw.end.getTime() - raw.start.getTime()}ms`
 }
 
 export default {
   plugins: [
     TimeStat({
-      silentOnHook: false, // enable build time console on hook
       hook: metrics
     })
   ]
