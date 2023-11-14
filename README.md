@@ -13,7 +13,35 @@ Build time stat reporting for [unplugin](https://github.com/unjs/unplugin).
 
 ## 🌟 Features
 
-- build time output console
+### build time output console
+
+![console](assets/console.png)
+
+### custom hook
+
+You can hook for build output time.
+
+example for vite plugin case:
+
+```ts
+import TimeStat from 'unplugin-time-stat/vite'
+
+function metrics(buildTime, { start, end }) {
+  // Something hooking (ex. send metrics service like datadog)
+  // ...
+
+  // if you will return a string, it's output to console
+  return `Build time: ${raw.end.getTime() - raw.start.getTime()}ms`
+}
+
+export default {
+  plugins: [
+    TimeStat({
+      hook: metrics
+    })
+  ]
+}
+```
 
 ## 💿 Install
 
@@ -158,6 +186,10 @@ module.exports = {
 ```
 
 <br></details>
+
+## 🛠️ Plugin options
+
+See the [here](https://github.com/kazupon/unplugin-time-stat/blob/main/src/types.ts)
 
 ## 🙌 Contributing guidelines
 
