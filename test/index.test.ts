@@ -13,22 +13,22 @@ afterEach(() => {
   vi.useRealTimers()
 })
 
-test('build time to console', () => {
+test('build time to console', async () => {
   const spyLog = vi.spyOn(console, 'log')
   const timeStat = TimeStat() as UnpluginOptions
   const mockContext = {} as UnpluginBuildContext
 
-  timeStat.buildStart!.call(mockContext)
+  await timeStat.buildStart!.call(mockContext)
   vi.advanceTimersByTime(2)
-  timeStat.buildEnd!.call(mockContext)
-  timeStat.writeBundle!()
+  await timeStat.buildEnd!.call(mockContext)
+  await timeStat.writeBundle!()
 
   expect(spyLog).toHaveBeenCalledTimes(1)
   expect(spyLog).toHaveBeenCalledWith('Build time: 0.002s')
 })
 
 describe('custom hook', () => {
-  test('basic', () => {
+  test('basic', async () => {
     const spyLog = vi.spyOn(console, 'log')
     const hook = vi.fn()
     const timeStat = TimeStat({
@@ -37,10 +37,10 @@ describe('custom hook', () => {
     const mockContext = {} as UnpluginBuildContext
 
     vi.setSystemTime(new Date(1700000000 * 1000))
-    timeStat.buildStart!.call(mockContext)
+    await timeStat.buildStart!.call(mockContext)
     vi.advanceTimersByTime(2)
-    timeStat.buildEnd!.call(mockContext)
-    timeStat.writeBundle!()
+    await timeStat.buildEnd!.call(mockContext)
+    await timeStat.writeBundle!()
 
     expect(spyLog).not.toHaveBeenCalledTimes(1)
     expect(hook).toHaveBeenCalledTimes(1)
@@ -50,7 +50,7 @@ describe('custom hook', () => {
     })
   })
 
-  test('async', () => {
+  test('async', async () => {
     const spyLog = vi.spyOn(console, 'log')
     const mock = vi.fn()
     const hook = async (buildTime: number, raw: RawData) => {
@@ -66,10 +66,10 @@ describe('custom hook', () => {
     const mockContext = {} as UnpluginBuildContext
 
     vi.setSystemTime(new Date(1700000000 * 1000))
-    timeStat.buildStart!.call(mockContext)
+    await timeStat.buildStart!.call(mockContext)
     vi.advanceTimersByTime(2)
-    timeStat.buildEnd!.call(mockContext)
-    timeStat.writeBundle!()
+    await timeStat.buildEnd!.call(mockContext)
+    timeStat.writeBundle!() // eslint-disable-line @typescript-eslint/no-floating-promises
     vi.advanceTimersByTime(2)
 
     expect(spyLog).not.toHaveBeenCalledTimes(1)
@@ -93,9 +93,9 @@ describe('custom hook', () => {
     const mockContext = {} as UnpluginBuildContext
 
     vi.setSystemTime(new Date(1700000000 * 1000))
-    timeStat.buildStart!.call(mockContext)
+    await timeStat.buildStart!.call(mockContext)
     vi.advanceTimersByTime(2)
-    timeStat.buildEnd!.call(mockContext)
+    await timeStat.buildEnd!.call(mockContext)
     await timeStat.writeBundle!()
 
     expect(spyLog).toHaveBeenCalledTimes(1)
