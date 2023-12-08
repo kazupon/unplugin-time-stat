@@ -39,5 +39,5 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = ({ hook = u
 
 export const unplugin = /* #__PURE__ */ createUnplugin(unpluginFactory)
 
-export type { BuildTimeHook, RawData }
+export type { Options, BuildTimeHook, RawData }
 export default unplugin
