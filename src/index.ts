@@ -1,7 +1,7 @@
 import { createUnplugin } from 'unplugin'
 
 import type { UnpluginFactory } from 'unplugin'
-import type { Options } from './types'
+import type { Options, BuildTimeHook, RawData } from './types'
 
 export const unpluginFactory: UnpluginFactory<Options | undefined> = ({ hook = undefined }: Options = {}) => {
   let startDate: Date
@@ -39,4 +39,5 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = ({ hook = u
 
 export const unplugin = /* #__PURE__ */ createUnplugin(unpluginFactory)
 
+export type { BuildTimeHook, RawData }
 export default unplugin
