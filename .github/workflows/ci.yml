@@ -123,7 +123,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Restore dist cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: dist
           key: ${{ matrix.os }}-node-v${{ matrix.node-version }}-${{ github.sha }}
