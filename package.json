@@ -133,7 +133,7 @@
     "chalk": "^5.3.0",
     "eslint": "^8.53.0",
     "eslint-config-prettier": "^9.0.0",
-    "esno": "^0.17.0",
+    "esno": "^4.0.0",
     "fast-glob": "^3.3.1",
     "gh-changelogen": "^0.2.8",
     "lint-staged": "^15.0.0",
